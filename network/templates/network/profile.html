@@ -1,0 +1,54 @@
+{% extends "network/index.html" %}
+{% load static%}
+
+{%block heading%}{%endblock%}
+
+{% block topSection%}
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="profileName row col-xs-12 col-sm-8 col-md-3 offset-sm-2 offset-md-0 justify-content-center">
+      <div class="nameSubDiv">
+        <h2>{{profile.username}}</h2>
+        <small>{{profile.email}}</small>
+      </div>
+    </div>
+
+    <div class="info col-sm-12 col-md-6 order-sm-3 order-md-2 ">
+      <div class="numPosts ">
+        <h5>{{profile.posts.count}}</h5>
+        <h6>Posts</h6>
+      </div>
+
+      <div class="following">
+        <h5>{{profile.following.count}}</h5>
+        <h6>Following</h6>
+      </div>
+
+      <div class="followers">
+        <h5 id="followersCount">{{profile.followers.count}}</h5>
+        <h6>Followers</h6>
+      </div>
+    </div>
+
+    <div class="options  col-sm-2 col-md-3  order-sm2 order-md-3">
+    {% if user != profile and user.is_authenticated %}
+    <!-- javascript's innerHTML not working when putting the html content in a different row!  -->
+      <button type="button" name="{{profile.username}}" class="btn btn-md btn-outline-primary" id="followBtn" onClick="follow_unfollow()">{% if profile in user.following.all%}Unfollow{% else %}Follow{% endif%}</button>
+    {%endif%}
+    </div>
+
+  </div>
+
+  <hr>
+</div>
+{%endblock%}
+
+{%block postHeading%}<h6>{{post.timestamp}}</h6>{%endblock%}
+
+{% block script %}
+    <script src="{% static 'network/network.js' %}"></script>
+    <script src="{% static 'network/profile.js' %}"></script>
+{% endblock %}

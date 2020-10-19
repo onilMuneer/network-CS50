@@ -1,0 +1,107 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+{%block heading%}<h4 class="heading">All posts</h4><hr>{% endblock%}
+
+
+
+{% block topSection%}
+{%if user.is_authenticated%}
+
+  <form class="newPostForm" action="{% url 'index'%}" method="post">
+      {%csrf_token%}
+      <h6>New post</h6>
+      <textarea required name="postBody" rows="3"></textarea><br>
+      <input type="submit" name="postBtn" value="post" class="btn btn-sm btn-outline-primary">
+  </form>
+
+{%endif%}
+{% endblock %}
+
+
+  {% for post in page_obj %}
+
+  <div class="conatiner-flex ">
+
+    <div class="row m-0">
+
+      <div class="offset-1 col-8 post">
+          <div class="name">
+            {%block postHeading%}
+            <h6><a href="{% url 'user' post.poster %}"><strong>{{post.poster}}</strong></a><small>  .{{post.timestamp}}</small></h6>
+            {%endblock%}
+          </div>
+            <p id="p_{{post.id}}">{{post.body}}</p>
+
+      </div>
+
+      <div class="col-3 row justify-content-center align-items-center options">
+
+        {% if user.is_authenticated%}
+        <button type="button"
+        {%if user in post.like.all%}
+          class="fa fa-heart Obtn"
+        {%else%}
+          class="fa fa-heart-o Obtn"
+        {% endif %}
+        value="p_{{post.id}}" onClick="like()">{{post.like.all.count}}</button>
+        {%endif%}
+
+        {% if post.poster == user%}
+        <div class="optionBtns">
+          <button type="button" class="btn btn-sm btn-outline-secondary Obtn" value="p_{{post.id}}" onClick="Edit()">Edit</button>
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+
+  </div>
+
+  {% empty%}
+  <h4 style="margin-left:15px;">no posts</h4>
+
+  {% endfor%}
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page=1">&laquo;</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+    </li>
+
+    <!-- <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">previous</a>
+    </li> -->
+    {%endif%}
+
+    {% if page_obj.has_next or page_obj.has_previous %}
+    <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+    {% endif%}
+    
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+    </li>
+
+    <!-- <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">next</a>
+    </li> -->
+    {%endif%}
+  </ul>
+</nav>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/network.js' %}"></script>
+{% endblock %}

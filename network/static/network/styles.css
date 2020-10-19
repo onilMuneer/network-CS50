@@ -1,0 +1,100 @@
+.post{
+  border: 1px solid silver;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.heading{
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+.name{
+  padding: 5px;
+}
+
+p{
+  background-color: #f2f2f2;
+  padding: 5px;
+}
+
+textarea{
+  padding: 5px;
+}
+
+textarea[name="postBody"]{
+  width: 60%;
+}
+
+.newPostForm{
+  margin: 15px;
+}
+
+@media (max-width:580px) {
+  .profileName{
+    padding-right: 0px;
+  }
+
+  textarea[name="postBody"]{
+    width: 77%;
+  }
+}
+
+@media (max-width:500px) {
+  p{
+    font-size: 10px;
+  }
+}
+
+
+.following, .followers, .numPosts{
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  width: 71px;
+}
+
+#followBtn{
+  height: 50px;
+  margin-top: 5px;
+}
+
+.options{
+  text-align: center;
+}
+
+.editing_texarea{
+  width: 100%;
+}
+.nameSubDiv{
+  text-align: center;
+}
+
+.info{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fa-heart{
+  color: red;
+}
+
+.Obtn{
+  margin-left: 10px
+}
+
+.fa , .fa:focus{
+  height: 35px;
+  border: 0px solid white;
+  border-radius: 10px;
+  outline: None;
+
+}
+
+/* .optionBtns{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
